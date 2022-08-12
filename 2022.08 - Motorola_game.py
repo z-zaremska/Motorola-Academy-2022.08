@@ -2,6 +2,7 @@ import os
 os.system('cls')
 
 import random
+import time
 
 #Import the words.txt file and convert it into list of words
 with open('Words.txt') as words_file:
@@ -9,7 +10,7 @@ with open('Words.txt') as words_file:
 
 list_of_words = words_for_game.split('\n')
 
-
+#Functions for gameplay
 def draw_words_for_game(list_of_words, level):
     """Randomly chooses proper amount of different words (depending on
     chosen level) to reveal during the game."""
@@ -39,7 +40,6 @@ def update_board(round_0):
         B {round_0['b1'][0]} {round_0['b2'][0]} {round_0['b3'][0]} {round_0['b4'][0]}
         —-----------------------------------
         """
-
     elif level == 'hard':
         updated_board = f"""\nLevel: {level}
         Guess chances: {guess_chances}
@@ -52,6 +52,7 @@ def update_board(round_0):
         —-----------------------------------
         """
     print(updated_board)
+
 
 def set_random_word():
     """Choses random word and removes it from words in game list."""
@@ -76,7 +77,7 @@ def pick_first_word(user_choice_A):
 
 
 def pick_maching_word(user_choice_A, user_choice_B):
-    """"""
+    """Picking second word and comparing with first one."""
     if round_0[user_choice_B][1] == round_0[user_choice_A][1]:
         round_0[user_choice_B][0] = uncover(user_choice_B)
         update_board(round_0)
@@ -99,7 +100,8 @@ Unfortunately it's not the same as the one you've uncoverd last time: '{round_0[
 level = ''
 guess_chances = ''
 uncovered_pairs = []
-words_in_game = []  
+words_in_game = []
+possible_choices = []
 
 #Player introduction
 user_name = input('What is yout name?\n')
@@ -128,6 +130,7 @@ while active:
             'b3': ['X', set_random_word(), 'X'],
             'b4': ['X', set_random_word(), 'X'],
             }
+        possible_choices = ['a1', 'a2', 'a3', 'a4', 'b1', 'b2', 'b3', 'b4']
         break
     if difficulty_level.lower() == 'h':
         print('\nYou have chosen "hard" level.')
@@ -152,6 +155,7 @@ while active:
             'd3': ['X', set_random_word(), 'X'],
             'd4': ['X', set_random_word(), 'X'],
             }
+        possible_choices = ['a1', 'a2', 'a3', 'a4', 'b1', 'b2', 'b3', 'b4', 'c1', 'c2', 'c3', 'c4', 'd1', 'd2', 'd3', 'd4']
         break
     else:
         print("""\nPlease choose difficulty level - easy('E')/hard('H').""")
@@ -159,22 +163,35 @@ while active:
 #Gameplay
 while True:
     #Round A
-    update_board(round_0)   
-    user_choice_A = input("""Which "X" you want to uncover?
+    update_board(round_0)
+    while True:
+        user_choice_A = input("""Which "X" you want to uncover?
 Your answear: """)
-    pick_first_word(user_choice_A)
+        if user_choice_A.lower() in possible_choices:
+            pick_first_word(user_choice_A)
+            break
+        else:
+            print(f"\nYou can't choose {user_choice_A} - try again!")
     #Round B
     update_board(round_0)
-    user_choice_B = input("""Which "X" you want to uncover?
+    while True:
+        user_choice_B = input("""Which "X" you want to uncover?
 Your answear: """)
-    guess_chances -= 1
-    pick_maching_word(user_choice_A, user_choice_B)
-
+        if user_choice_B.lower() in possible_choices:
+            guess_chances -= 1
+            pick_maching_word(user_choice_A, user_choice_B)
+            break
+        else:
+            print(f"\nYou can't choose {user_choice_B} - try again!")
+    
+    guessing_time = time.process_time()
     if level == 'easy' and len(uncovered_pairs) == 4:
-        print('\nYOU WON!')
+        print(f"""\nYOU WON!
+        It took you {10-guess_chances} and {guessing_time} seconds.""")
         break
     if level == 'hard' and len(uncovered_pairs) == 8:
-        print('\nYOU WON!')
+        print(f"""\nYOU WON!
+        It took you {15-guess_chances} and {guessing_time} seconds.""")
         break
     elif guess_chances == 0:
         print('\nGAME OVER')
