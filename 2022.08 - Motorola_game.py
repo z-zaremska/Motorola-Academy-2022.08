@@ -82,18 +82,14 @@ def pick_maching_word(user_choice_A, user_choice_B):
         update_board(round_0)
         print(f'\nCongratulations!\nYou have uncoverd a pair of "{round_0[user_choice_B][1]}"')
         uncovered_pairs.append({round_0[user_choice_B][1]})
-        go_on = input('\nIf you want to continue: press any.\nIf you want to quit press "q".\nYour answear: ')
-        if go_on.lower() == 'q':
-            print('\nGame over.')
+        go_on = input('\nTo continue - press any\nYour answear: ')
     else:
         round_0[user_choice_B][0] = uncover(user_choice_B)
         update_board(round_0)
         possible_choices.append(user_choice_A)
         print(f"""\nYou've uncovered word '{round_0[user_choice_B][1]}' ({user_choice_B}).
 Unfortunately it's not the same as the one you've uncoverd last time: '{round_0[user_choice_A][1]}' ({user_choice_A}).""")
-        go_on = input('\nIf you want to continue: press any.\nIf you want to quit press "q".\nYour answear: ')
-        if go_on.lower() == 'q':
-            print('\nGame over.')
+        go_on = input('\nTo continue - press any\nYour answear: ')
         round_0[user_choice_A][0] = cover(user_choice_A)
         round_0[user_choice_B][0] = cover(user_choice_B)
 
