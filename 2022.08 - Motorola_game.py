@@ -74,15 +74,17 @@ def cover(user_choice):
 def pick_first_word(user_choice_A):
     """Uncovers first word chosen by player."""
     round_0[user_choice_A][0] = uncover(user_choice_A)
+    possible_choices.remove(user_choice_A)
 
 
 def pick_maching_word(user_choice_A, user_choice_B):
-    """Picking second word and comparing with first one."""
+    """"""
     if round_0[user_choice_B][1] == round_0[user_choice_A][1]:
         round_0[user_choice_B][0] = uncover(user_choice_B)
         update_board(round_0)
         print(f'\nCongratulations!\nYou have uncoverd a pair of "{round_0[user_choice_B][1]}"')
         uncovered_pairs.append({round_0[user_choice_B][1]})
+        possible_choices.remove(user_choice_B)
         go_on = input('\nIf you want to continue: press any.\nIf you want to quit press "q".\nYour answear: ')
         if go_on.lower() == 'q':
             print('\nGame over.')
@@ -96,12 +98,15 @@ Unfortunately it's not the same as the one you've uncoverd last time: '{round_0[
             print('\nGame over.')
         round_0[user_choice_A][0] = cover(user_choice_A)
         round_0[user_choice_B][0] = cover(user_choice_B)
+        possible_choices.append(user_choice_A)
+        possible_choices.append(user_choice_B)
 
 level = ''
 guess_chances = ''
 uncovered_pairs = []
 words_in_game = []
 possible_choices = []
+uncovered_fields = []
 
 #Player introduction
 user_name = input('What is yout name?\n')
