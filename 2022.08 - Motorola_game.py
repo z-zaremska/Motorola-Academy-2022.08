@@ -1,6 +1,4 @@
 import os
-os.system('cls')
-
 import random
 import time
 
@@ -28,7 +26,6 @@ def draw_words_for_game(list_of_words, level):
 def update_board(round_0):
     """Clears previous game board and shows new one
     with updated game status at level easy."""
-    import os
     os.system('cls')
 
     if level == 'easy':
@@ -106,12 +103,14 @@ guess_chances = ''
 uncovered_pairs = []
 words_in_game = []
 possible_choices = []
-uncovered_fields = []
 
 #Player introduction
 user_name = input('What is yout name?\n')
 
 print(f"""\nHi, {user_name.title()}!
+Welcome to the simple 'Memory' game!
+Your goal is to uncover all words pairs during the game!
+
 Before we start, please choose difficulty level.
 * Easy (type 'E')
 * Hard (type 'H')""")
