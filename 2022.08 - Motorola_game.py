@@ -169,7 +169,7 @@ while True:
     update_board(round_0)
     while True:
         user_choice_A = input("""Which "X" you want to uncover?
-Your answear: """)
+Your answear: """).lower()
         if user_choice_A.lower() in possible_choices:
             pick_first_word(user_choice_A)
             break
@@ -179,7 +179,7 @@ Your answear: """)
     update_board(round_0)
     while True:
         user_choice_B = input("""Which "X" you want to uncover?
-Your answear: """)
+Your answear: """).lower()
         if user_choice_B.lower() in possible_choices:
             guess_chances -= 1
             pick_maching_word(user_choice_A, user_choice_B)
