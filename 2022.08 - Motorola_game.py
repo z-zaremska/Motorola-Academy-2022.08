@@ -78,16 +78,17 @@ def pick_maching_word(user_choice_A, user_choice_B):
     """"""
     if round_0[user_choice_B][1] == round_0[user_choice_A][1]:
         round_0[user_choice_B][0] = uncover(user_choice_B)
+        possible_choices.remove(user_choice_B)
         update_board(round_0)
         print(f'\nCongratulations!\nYou have uncoverd a pair of "{round_0[user_choice_B][1]}"')
         uncovered_pairs.append({round_0[user_choice_B][1]})
-        possible_choices.remove(user_choice_B)
         go_on = input('\nIf you want to continue: press any.\nIf you want to quit press "q".\nYour answear: ')
         if go_on.lower() == 'q':
             print('\nGame over.')
     else:
         round_0[user_choice_B][0] = uncover(user_choice_B)
         update_board(round_0)
+        possible_choices.append(user_choice_A)
         print(f"""\nYou've uncovered word '{round_0[user_choice_B][1]}' ({user_choice_B}).
 Unfortunately it's not the same as the one you've uncoverd last time: '{round_0[user_choice_A][1]}' ({user_choice_A}).""")
         go_on = input('\nIf you want to continue: press any.\nIf you want to quit press "q".\nYour answear: ')
@@ -95,8 +96,6 @@ Unfortunately it's not the same as the one you've uncoverd last time: '{round_0[
             print('\nGame over.')
         round_0[user_choice_A][0] = cover(user_choice_A)
         round_0[user_choice_B][0] = cover(user_choice_B)
-        possible_choices.append(user_choice_A)
-        possible_choices.append(user_choice_B)
 
 level = ''
 guess_chances = ''
@@ -165,7 +164,7 @@ while active:
         print("""\nPlease choose difficulty level - easy('E')/hard('H').""")
 
 #Gameplay
-while True:
+while True: 
     #Round A
     update_board(round_0)
     while True:
@@ -191,11 +190,11 @@ Your answear: """)
     guessing_time = time.process_time()
     if level == 'easy' and len(uncovered_pairs) == 4:
         print(f"""\nYOU WON!
-        It took you {10-guess_chances} and {guessing_time} seconds.""")
+    It took you {10-guess_chances} chances and {guessing_time} seconds to win this game.""")
         break
     if level == 'hard' and len(uncovered_pairs) == 8:
         print(f"""\nYOU WON!
-        It took you {15-guess_chances} and {guessing_time} seconds.""")
+    It took you {15-guess_chances} chances and {guessing_time} seconds to win this game.""")
         break
     elif guess_chances == 0:
         print('\nGAME OVER')
